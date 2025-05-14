@@ -70,7 +70,7 @@ static struct list wait_list;
 void thread_sleep(int64_t wakeup_tick); //thread_sleep
 void thread_awake(int64_t now_tick);
 static bool wakeup_compare(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
-static bool cmp_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
+
 
 /* Returns true if T appears to point to a valid thread. */
 #define is_thread(t) ((t) != NULL && (t)->magic == THREAD_MAGIC)
@@ -654,7 +654,7 @@ static bool wakeup_compare(const struct list_elem *a, const struct list_elem *b,
        < list_entry(b, struct thread, elem)->wakeup_tick;
 }
 
-static bool cmp_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED) {
+bool cmp_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED) {
     struct thread *t1 = list_entry(a, struct thread, elem);
     struct thread *t2 = list_entry(b, struct thread, elem);
     return t1->priority > t2->priority;
